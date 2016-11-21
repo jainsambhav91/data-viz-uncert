@@ -10,10 +10,6 @@ final project for data visualization, uncertainty and measurement error.
 
 For instance:
 
-Question: Does the bank provide you with the privilege to withdraw money from your account any time you want?
-
-Possible Answers: Yes / No / Don't know
-
 
 There are 2 datasets involved - one with the survey responses before the training program was conducted and one with responses after the training program.
 However, in each district, not all respondents who participated in the pre-survey were present in the post-survey, leading to a non-response bias in the post-survey analysis.
@@ -38,3 +34,37 @@ Question            |Current Method            |  Including non-response
 3  |![](case3a.png)  |  ![](case3b.png)
 4  |![](case4a.png)  |  ![](case4b.png)
 5  |![](case5a.png)  |  ![](case5b.png)
+
+similarly for 
+
+### District ARAH
+---
+### District ARAH
+---
+### District BALLIA
+---
+### District BHADOHI
+---
+### District BUXUR
+---
+### District CHANDAULI
+---
+### District DEORIA
+---
+### District GAJIPUR
+---
+### District KAIMUR
+---
+### District MIRZAPUR
+---
+### District PATNA
+---
+### District VAISHALI
+---
+### District VARANASI
+---
+
+
+## Proposed prototype
+
+![](prototype.png)
