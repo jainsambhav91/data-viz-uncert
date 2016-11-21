@@ -34,7 +34,7 @@ Possible Answers: Yes / No / Don't know
 Question            |Current Method            |  Including non-response
 :-------------------------:|:-------------------------:|:-------------------------:
 1  |![](case1a.png)  |  ![](case1b.png)
-2  |![](case1a.png)  |  ![](case1b.png)
-3  |![](case1a.png)  |  ![](case1b.png)
-4  |![](case1a.png)  |  ![](case1b.png)
-5  |![](case1a.png)  |  ![](case1b.png)
+2  |![](case2a.png)  |  ![](case2b.png)
+3  |![](case3a.png)  |  ![](case3b.png)
+4  |![](case4a.png)  |  ![](case4b.png)
+5  |![](case5a.png)  |  ![](case5b.png)
