@@ -24,12 +24,17 @@ However, in each district, not all respondents who participated in the pre-surve
 Let us take an example from the data and idetify the uncertainty in it. 
 
 
-District: Allahabad
+### District: Allahabad
 
-Question 1
+**Question 1**
+
 Possible Answers: Yes / No / Don't know
 
 
-Current Method            |  Including non-response
-:-------------------------:|:-------------------------:
-![](case1a.png)  |  ![](case1b.png)
+Question            |Current Method            |  Including non-response
+:-------------------------:|:-------------------------:|:-------------------------:
+1  |![](case1a.png)  |  ![](case1b.png)
+2  |![](case1a.png)  |  ![](case1b.png)
+3  |![](case1a.png)  |  ![](case1b.png)
+4  |![](case1a.png)  |  ![](case1b.png)
+5  |![](case1a.png)  |  ![](case1b.png)
