@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script src="https://d3js.org/d3-drag.v1.min.js"></script>
+        <script type="text/javascript" src="data.js"></script>
+        <style>
+        
+        
+        body{
+            margin: 20px 20px 20px 20px;
+        }
+        
+        img {
+              
+              width:600px;
+              height:auto;
+              float: right;
+              padding: 0px 0px 0px 20px;
+            }
+       
+        #menu{
+           margin-top: 100px;
+           } 
+        
+        #ul {
+            /*position:relative;*/
+            /*margin-top: 100px;*/
+            width: 100%;
+            list-style-type: none;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+                
+            }
+        
+        #ul2{
+            list-style-type: none;
+            padding:0px 0px 0px 10px;;
+            overflow: hidden;
+        }
+        
+        #ul3{
+            background-color: #eaeaea;
+            list-style-type: none;
+            padding: 0;
+            overflow: hidden;
+        }
+            
+        li {
+                float: left;
+            }    
+        
+        li a:link {
+                position:relative;
+                left: 25%;
+                right: 25%;
+                display: inline-block;
+                padding: 14px 200px;
+                /*width: 100%;*/
+                color: white;
+                text-align: center;
+                text-decoration: none;
+            }
+        
+        .cblist{
+            padding: 10px 40px 10px 10px;
+            background-color: #eaeaea;
+            /*text-indent: -15px;*/
+        }
+        
+        li a:visited {
+                background-color: #111;
+                color: white;
+                text-decoration:none;
+            }    
+            
+        li a:hover:not(.active)  {
+                background-color: #111;
+                color: white;
+                text-decoration: none;
+            } 
+        
+        li a:active  {
+                background-color: #111;
+                color: white;
+                text-decoration: none;
+            }    
+       
+       #visual{
+           
+           height: 400px;
+       }
+       
+       #feedbackDiv{
+           text-align: center;
+       }
+       
+       #feedback{
+            background-color: #333;
+            border: 1px solid #333;
+            color: white;
+            padding: 10px 20px 10px 20px;
+            text-align: center;
+            display: inline-block;
+            text-decoration: none;
+            cursor: pointer;
+       }
+       
+                        
+        </style>
+    </head>
+    <body>
+        <h2>Visualizing uncertainty in data: <br> non-response bias</h2>
+        <br>
+        <br>
+        <h4>Introduction</h4>
+        <p>.. </p>
+        <p>.. </p>
+        <p>.. </p>
+        <p>.. </p>
+        
+        <h4>About the data</h4>
+        
+            <div id="aboutdata">
+                <img class="img" src="training-pic.png" alt="training program">
+                <p>Indian School for Microfinance for Women is a microfinance training institution that operates in rural parts of India. In one of their trainings conducted across different villages in the state of Bihar, they conducted a survey both before and after the training to compare the results and evaluate the impact of the training program.</p>
+                <p>For instance: the clients were asked the following question both before and after the training program: <br> Can an illiterate person be issued a debit card? </p>
+                <p>Clients were required to answer these questions with either a 'Yes', 'No' or 'Don't Know'. <br> An increase in the number of 'Yes' responses from pre to post training would indicate a successful training.</p>
+                <p>However, in each district, not all respondents who participated in the pre-survey were present in the post-survey, leading to a non-response bias in the post-survey analysis.</p>
+            </div>
+
+        
+        <div id="menu">
+            <p> Understanding the current process and proposed modifications: </p>
+            <ul id = "ul">
+              <li><a href="#currentmethod">current method</a></li>
+              <li><a href="#proposedmethod">proposed method</a></li>
+            </ul>
+        </div>
+        
+        <div id="placeholder2">
+            <p>talking about the proposed method in this para .........</p>
+            <hr>
+            <ul id="ul3">
+                <li><h4 style="padding:10px 10px 10px 10px; margin: 0px">District 1: ARAH</h4></li>
+                <li><p style="padding:10px 10px 10px 10px; margin: 0px">(Non Response: <b>24%</b>)</p></li>
+            </ul>
+            <svg id="visual2"></svg>
+            <div id = "checkboxes">
+                <h5 style="padding:0px 0px 0px 10px;">Simlulating response of non-respondents in <b>POST</b> survey:</h5>
+            
+                <ul id="ul2">
+                  <li class="cblist"><input id='cv1' type='checkbox' onclick='click1(this);'><b>    50%</b> responded <i>'yes'</i>, <b>50%</b> responed <i>'no'</i></label></li>
+                  <li class="cblist"><input id='cv2' type='checkbox' onclick='click2(this);'><b>    Everyone</b> responded <i>'yes'</i></label></li>
+                  <li class="cblist"><input id='cv3' type='checkbox' onclick='click3(this);'><b>    Everyone</b> responded <i>'no'</i></label></li>
+                  <li class="cblist"><input id='cv4' type='checkbox' onclick='click4(this);'><b>    Everyone</b> responded <i>'don't know'</i></label></li>
+                </ul>
+            </div>
+        </div>
+        
+        <hr>
+        <div id="feedbackDiv">    
+            <form action="feedback.html">
+                <input id="feedback" type="submit" value="Give feedback" />
+            </form>
+        </div>
+            
+        <script>
+        var width = window.innerWidth;
+        var height = 250;
+        
+            var canvas1 = d3.select("#visual2")
+                            .attr("width", width)
+                            .attr("height", height);
+            
+            d3.select('#visual2')
+                    .append("text")
+                    .attr('x', 20)
+                    .attr('y', 40)
+                    .text("Pre survey:");
+            
+            d3.select('#visual2')
+                    .append("text")
+                    .attr('x', 20)
+                    .attr('y', 140)
+                    .text("Post survey:");        
+            
+            baseVisualPre(50);
+            baseVisualPost(150);
+            
+            function baseVisualPre(dist){
+            
+                var x = -5;
+                var y = 0;
+                
+                for(var i=1; i<=data[0]['preTot']; i++){
+                
+                var color = "";
+                
+                if(i < data[0]['preYes']){ color = "#ffa124"; }else if(i< data[0]['preYes'] + data[0]['preNo']){ color = "#35b9ed" }else if(i <= data[0]['preYes'] + data[0]['preNo'] + data[0]['preDk']){color = "#ffb8f2"};
+                    if(y%50 == 0){
+                        x+=5;
+                        y=0;
+                        d3.select('#visual2')
+                            .append('rect')
+                            .attr('x', x + 20)
+                            .attr('y', y + dist)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                        y+=5;    
+                    }else{    
+                   d3.select('#visual2')
+                            .append('rect')
+                            .attr('x', x + 20)
+                            .attr('y', y + dist)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                    y+=5;
+                    }
+                }
+                 
+            }
+            
+            function click1(cv1){
+                if(cv1.checked){
+                    document.getElementById("cv2").checked = false;
+                    document.getElementById("cv3").checked = false;
+                    document.getElementById("cv4").checked = false;
+                    // display("check");
+                var x = -5;
+                var y = 0;
+                
+                for(var i=1; i<=data[0]['preTot']; i++){
+                
+                var color = "";
+                
+                if(i < data[0]['postYes']){ color = "#ffa124"; }else if(i< data[0]['postYes'] + data[0]['yes50']){ color = "#ffcc88";}else if(i< data[0]['postYes'] + data[0]['yes50'] + data[0]['postNo']){ color = "#35b9ed" }else if(i< data[0]['postYes'] + data[0]['yes50'] + data[0]['postNo'] + data[0]['no50']){color = "#c1e0ea"}else if(i <= data[0]['postYes'] + data[0]['yes50'] + data[0]['postNo'] + data[0]['no50'] + data[0]['postDk']){color = "#ffb8f2"};
+    
+                    if(y%50 == 0){
+                        x+=5;
+                        y=0;
+                        d3.select('#visual2')
+                            .append('rect')
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                        y+=5;    
+                    }else{    
+                   d3.select('#visual2')
+                            .append('rect')
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                    y+=5;
+                    }
+                }    
+                    
+                }else{
+                    // display("not checked");
+                    baseVisualPost(150);
+                }
+            }
+            
+            function click2(cv2){
+                if(cv2.checked){
+                    document.getElementById("cv1").checked = false;
+                    document.getElementById("cv3").checked = false;
+                    document.getElementById("cv4").checked = false;
+                    // display("check");
+                var x = -5;
+                var y = 0;
+                
+                for(var i=1; i<=data[0]['preTot']; i++){
+                
+                var color = "";
+                
+                if(i < data[0]['postYes']){ color = "#ffa124"; }else if(i< data[0]['postYes'] + data[0]['allYes']){ color = "#ffcc88";}else if(i< data[0]['postYes'] + data[0]['allYes'] + data[0]['postNo']){ color = "#35b9ed" }else if(i<= data[0]['postYes'] + data[0]['allYes'] + data[0]['postNo'] + data[0]['postDk']){ color = "#ffb8f2"};
+                    if(y%50 == 0){
+                        x+=5;
+                        y=0;
+                        d3.select('#visual2')
+                            .append('rect')
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                        y+=5;    
+                    }else{    
+                   d3.select('#visual2')
+                            .append('rect')
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                    y+=5;
+                    }
+                }    
+                    
+                }else{
+                    // display("not checked");
+                    baseVisualPost(150);
+                }
+            }
+            
+            function click3(cv3){
+                if(cv3.checked){
+                    document.getElementById("cv1").checked = false;
+                    document.getElementById("cv2").checked = false;
+                    document.getElementById("cv4").checked = false;
+                    // display("check");
+                var x = -5;
+                var y = 0;
+                
+                for(var i=1; i<=data[0]['preTot']; i++){
+                
+                var color = "";
+                
+                if(i < data[0]['postYes']){ color = "#ffa124"; }else if(i< data[0]['postYes'] + data[0]['postNo']){ color = "#35b9ed" }else if(i< data[0]['postYes'] + data[0]['postNo'] + data[0]['allNo']){ color = "#c1e0ea" }else if(i<= data[0]['postYes'] + data[0]['postNo'] + data[0]['allNo'] + data[0]['postDk']){ color = "#ffb8f2"};
+                    if(y%50 == 0){
+                        x+=5;
+                        y=0;
+                        d3.select('#visual2')
+                            .append('rect')
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                        y+=5;    
+                    }else{    
+                   d3.select('#visual2')
+                            .append('rect')
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                    y+=5;
+                    }
+                }    
+                    
+                }else{
+                    // display("not checked");
+                    baseVisualPost(150);
+                }
+            }
+            
+            function click4(cv4){
+                if(cv4.checked){
+                    document.getElementById("cv1").checked = false;
+                    document.getElementById("cv2").checked = false;
+                    document.getElementById("cv3").checked = false;
+                    // display("check");
+                var x = -5;
+                var y = 0;
+                
+                for(var i=1; i<=data[0]['preTot']; i++){
+                
+                var color = "";
+                
+                if(i < data[0]['postYes']){ color = "#ffa124"; }else if(i< data[0]['postYes'] + data[0]['postNo']){ color = "#35b9ed" }else if(i< data[0]['postYes'] + data[0]['postNo'] + data[0]['postDk']){ color = "#ffb8f2"}else if(i<= data[0]['postYes'] + data[0]['postNo'] + data[0]['postDk'] + data[0]['allDk']){color = "#ffebfc"};
+                    if(y%50 == 0){
+                        x+=5;
+                        y=0;
+                        d3.select('#visual2')
+                            .append('rect')
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                        y+=5;    
+                    }else{    
+                   d3.select('#visual2')
+                            .append('rect')
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                    y+=5;
+                    }
+                }        
+          }else{
+                    // display("not checked");
+                    baseVisualPost(150);
+                }
+            }
+            
+            function baseVisualPost(dist){
+                
+                var x = -5;
+                var y = 0;
+                
+                for(var i=1; i<=data[0]['preTot']; i++){
+                
+                var color = "";
+                
+                if(i < data[0]['postYes']){ color = "#ffa124"; }else if(i< data[0]['postYes'] + data[0]['postNo']){ color = "#35b9ed" }else if(i < data[0]['postYes'] + data[0]['postNo'] + data[0]['postDk']){color = "#ffb8f2"}else if(i <= data[0]['postYes'] + data[0]['postNo'] + data[0]['postDk'] + data[0]['nonResponse']){color = "#efefef"};  
+                    if(y%50 == 0){
+                        x+=5;
+                        y=0;
+                        d3.select('#visual2')
+                            .append('rect')
+                            .attr('x', x + 20)
+                            .attr('y', y + dist)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                        y+=5;    
+                    }else{    
+                   d3.select('#visual2')
+                            .append('rect')
+                            .attr('x', x + 20)
+                            .attr('y', y + dist)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                    y+=5;
+                    }
+                }
+                
+            }
+            
+            function display(msg) {
+              var p = document.createElement('p');
+              p.innerHTML = msg;
+              document.body.appendChild(p);
+            }
+
+            
+        </script>
+    </body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script src="https://d3js.org/d3-drag.v1.min.js"></script>
+        <script type="text/javascript" src="data.js"></script>
+        <style>
+        
+        
+        body{
+            margin: 20px 20px 20px 20px;
+        }
+        
+        .cblist{
+            list-style-type: none;      
+        }
+        a {
+            background-color: #333;
+            color: white;
+            text-decoration:none;
+            padding: 10px 30px 10px 30px;
+        }
+        a:visited {
+                background-color: #333;
+                color: white;
+                text-decoration:none;
+            }    
+            
+        a:hover:not(.active)  {
+                background-color: #111;
+                color: white;
+                text-decoration: none;
+            } 
+        
+        a:hover  {
+                background-color: #111;
+                color: white;
+                text-decoration: none;
+            }   
+            
+            
+       
+              
+        </style>
+    </head>
+    <body>
+        
+        <h2>Feedback</h2>
+        <p>You are the program manager and want to analyse the impact of the training program. You have two teams crunching numbers for you and they come up with the visualizations you have just seen. Keeping in mind your experince trying to comprehend the two visuals, answer the questions that follow:</p>
+       <br>
+       <ol id="mainList">
+           <li>
+               <div id = "checkboxes">
+                    <form action="action_page.php">
+                      How do you think <b>visualization-2</b> is different than <b>visualization-1</b>?<br><br>
+                      <textarea name="paragraph_text" cols="50" rows="5"></textarea>
+                    </form>
+                </div>
+           </li>
+           <hr>
+           <li>
+               <div id = "checkboxes">
+                    <p style="padding:0px 0px 0px 10px;">Were you able to understand the data behind <b>visualization-2</b>?</p>
+                    <ul id="ul2">
+                      <li class="cblist"><input id='cv1' type='checkbox' onclick='click1(this);'><b>    Yes</b>, it was easy to understand.</label></li>
+                      <li class="cblist"><input id='cv2' type='checkbox' onclick='click2(this);'><b>    No</b>, it was not comprehensible.</label></li>
+                    </ul>
+                </div>
+           </li>
+           <hr>
+           
+           <li>
+               <div id = "checkboxes">
+                    <p style="padding:0px 0px 0px 10px;">    On a scale of -3 to +3, how confident do you feel about the accuracy of results displayed in visualization-2 as compared to visualization-1? <br> <i>(-3 : no confidence, viz-2 seems more inaccurate. 0 : viz-1 and viz-2 seem equally accurate. +3 : full confidence in the accuracy of viz-2)</i></p>
+                    <ul id="ul2">
+                      <li class="cblist"><input id='cv1' type='checkbox' onclick='click1(this);'>    -3</label></li>
+                      <li class="cblist"><input id='cv2' type='checkbox' onclick='click2(this);'>    -2</label></li>
+                      <li class="cblist"><input id='cv1' type='checkbox' onclick='click1(this);'>    -1</label></li>
+                      <li class="cblist"><input id='cv2' type='checkbox' onclick='click2(this);'>    -0</label></li>
+                      <li class="cblist"><input id='cv1' type='checkbox' onclick='click1(this);'>    +1</label></li>
+                      <li class="cblist"><input id='cv2' type='checkbox' onclick='click2(this);'>    +2</label></li>
+                      <li class="cblist"><input id='cv2' type='checkbox' onclick='click2(this);'>    +3</label></li>
+                    </ul>
+                </div>
+           </li>
+           <hr>
+           <li>
+               <div id = "checkboxes">
+                    <p style="padding:0px 0px 0px 10px;">How much more time did you spend trying to understand visualization-2 as compared to visualization-1?</p>
+                    <ul id="ul2">
+                      <li class="cblist"><input id='cv1' type='checkbox' onclick='click1(this);'>    I spent <b>less</b> time understanding visualization-2.</label></li>
+                      <li class="cblist"><input id='cv2' type='checkbox' onclick='click2(this);'>    I spent <b>about the same</b> time for both visualizations.</label></li>
+                      <li class="cblist"><input id='cv3' type='checkbox' onclick='click3(this);'>    I spent <b>more</b> time understanding visualization-2.</label></li>
+                    </ul>
+                </div>
+           </li>
+           <hr>
+           <li>
+               <div id = "checkboxes">
+                    <p style="padding:0px 0px 0px 10px;">Would you rather spend more time trying to understand visualization-2 that also displays uncertainty in data or prefer the easy-to-understand bar-chart in visualization-1 which is not displaying any undertainty?</p>
+                    <ul id="ul2">
+                      <li class="cblist"><input id='cv1' type='checkbox' onclick='click1(this);'>    I would go with visualization-2. Even it involves spending more time. I think it displays the uncertainty very clearly, which I feel is important.</label></li>
+                      <li class="cblist"><input id='cv2' type='checkbox' onclick='click2(this);'>    I could go with either of the visualizations. I don't think visualization-2 is adding a lot of value here.</label></li>
+                      <li class="cblist"><input id='cv3' type='checkbox' onclick='click3(this);'>    I think visualization-2 is adding unnecessary complexity to the graph, and I would go with visualization-1, as it is more comprehensible, even though a little inaccurate.</label></li>
+                    </ul>
+                </div>
+           </li>
+           <hr>
+            <li>
+               <div id = "checkboxes">
+                    <p style="padding:0px 0px 0px 10px;">In visualization-2, did the interactive features help you understand the uncertainty better?</p>
+                    <ul id="ul2">
+                      <li class="cblist"><input id='cv1' type='checkbox' onclick='click1(this);'>    Yes, they were helpful, and made me more confident about my understanding of the data.</label></li>
+                      <li class="cblist"><input id='cv2' type='checkbox' onclick='click2(this);'>    Not really, I could have understood the uncertainty aspect without the use of the interactive features.</label></li>
+                    </ul>
+                </div>
+           </li>
+           <hr>
+       </ol>
+       
+       <form action="action_page.php">
+          Name:<br>
+          <input type="text" name="Name" value="">
+          <br>
+          Age:<br>
+          <input type="text" name="Age" value="">
+          <br>
+          Background:<br>
+          <input type="text" name="Background" value="">
+          <br><br>
+        </form> 
+       <br>
+       <br>
+       <a href="#submit"> submit </a>
+       
+        <script>
+        </script>
+    </body>
+</html>
