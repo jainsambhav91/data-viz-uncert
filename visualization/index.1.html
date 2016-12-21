@@ -1,0 +1,2423 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script src="https://d3js.org/d3-drag.v1.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script type="text/javascript" src="data.js"></script>
+        <style>
+        
+        /*2.21 % uncertainty - 3rd district  */
+                
+        body{
+            margin: 20px 20px 20px 20px;
+        }
+        
+        .img {
+              
+              width:600px;
+              height:auto;
+              float: right;
+              padding: 0px 0px 0px 20px;
+              border: 1px solid black;
+            }
+            
+        #img2{
+            float: left;
+            height: 20px;
+            width: auto;
+            margin-left: 20px;
+        }    
+        #key1{
+            height: 20px;
+            width: auto;
+            margin-left: 30px;
+        }
+        #key2{
+           height: 20px;
+           width: auto;
+           margin-left: 30px;
+        }
+        #key3{
+         height: 20px;
+         width: auto;
+         margin-left: 30px;
+        }
+        #key4{
+           height: 20px;
+           width: auto;
+           margin-left: 30px;
+        }
+       
+       
+        #menu{
+           margin-top: 50px;
+           } 
+        
+        #ul {
+            width: 100%;
+            list-style-type: none;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+                
+            }
+        
+        #ul2{
+            list-style-type: none;
+            padding:0px 0px 0px 10px;;
+            overflow: hidden;
+        }
+        
+        #ul3{
+            background-color: #eaeaea;
+            list-style-type: none;
+            padding: 0;
+            overflow: hidden;
+        }
+        
+        #key{
+            list-style-type: none;
+            margin-top: 10px;
+            margin-left: 0px;
+            
+        }
+            
+        li {
+                float: left;
+            }    
+        
+        li a:link {
+                position:relative;
+                left: 25%;
+                right: 25%;
+                display: inline-block;
+                padding: 14px 200px;
+                /*width: 100%;*/
+                color: white;
+                text-align: center;
+                text-decoration: none;
+            }
+        
+        .cblist{
+            padding: 10px 40px 10px 10px;
+            /*background-color: #eaeaea;*/
+            /*text-indent: -15px;*/
+        }
+        
+        li a:visited {
+                background-color: #111;
+                color: white;
+                text-decoration:none;
+            }    
+            
+        li a:hover:not(.active)  {
+                background-color: #111;
+                color: white;
+                text-decoration: none;
+            } 
+        
+        li a:active  {
+                background-color: #111;
+                color: white;
+                text-decoration: none;
+            }    
+       
+       #visual{
+           
+           height: 400px;
+       }
+       
+       #feedbackDiv{
+           text-align: center;
+       }
+       
+       #feedback{
+            background-color: #333;
+            border: 1px solid #333;
+            color: white;
+            padding: 10px 20px 10px 20px;
+            text-align: center;
+            display: inline-block;
+            text-decoration: none;
+            cursor: pointer;
+       }
+       
+       .tooltip {	
+                position: absolute;
+                text-align: center;			
+                width: 200px;					
+                height: 20px;					
+                			
+                /*font: 10px sans-serif;		*/
+                background: gray;	
+                /*border-width: 2px;		*/
+                border-radius: 2px;
+                /*box-shadow: 0px 0px 10px #888888;*/
+                /*border-style: solid;*/
+                /*border-color: black;*/
+                }
+            #figure{
+                float: right;
+            }    
+       
+        </style>
+    </head>
+    <body>
+        <h4>Study the graphs below and answer the survey questions that follow:</h4>
+        <hr>
+        
+        <br>
+        
+        <h4>About the data</h4>
+        
+            <div id="aboutdata">
+                <img class="img" src="training-pic.png" alt="training program">
+                <p>Indian School for Microfinance for Women is a microfinance training institution that operates in rural parts of India. In one of their trainings conducted across different villages in the state of Bihar, they conducted a survey both before and after the training to compare the results and evaluate the impact of the training program (figure 1).</p>
+                <p>For instance: the clients were asked the following question both before and after the training program: <br> Can an illiterate person be issued a debit card? </p>
+                <p>Clients were required to answer these questions with either a 'Yes', 'No' or 'Don't Know'. <br> <b>An increase in the number of 'Yes' responses from pre to post training would indicate a successful training.</b></p>
+                <p>However, in each village, not all respondents who participated in the pre-training survey were present in the post-training survey.</p>
+            </div>
+            
+
+        
+        <div id="menu">
+            <p id='figure'> figure 1 </p>
+            <br>
+            <hr>
+            <p> Understanding the pre-training and post-training survey responses for <b>THREE</b> villages: <b>(one square pixel represents one respondent; hover over the pixels to see absolute totals)</b> </p>
+            <ul id = "ul">
+              <!--<li><a href="#currentmethod">current method</a></li>-->
+              <!--<li><a href="#proposedmethod">proposed method</a></li>-->
+            </ul>
+        </div>
+        
+        <div id="placeholder2">
+            <!--<p>talking about the proposed method in this para .........</p>-->
+            <ul id="ul3">
+                <li><h4 style="padding:10px 10px 10px 10px; margin: 0px">Village 1: ARAH</h4></li>
+                <!--<li><p style="padding:10px 10px 10px 10px; margin: 0px">(Non Response: <b>24%</b>)</p></li>-->
+            </ul>
+            <ul id="key" style="margin-left: 0px; float: left">
+                <li>Key: </li>
+                
+                <li><img id="key1" src="yes.png" alt="yes"></li>
+                <li id="key1text" style="margin-left: 5px;">  answered <b>'yes'</b> </li>
+                
+                <li><img id="key2" src="no.png" alt="no"></li>
+                <li id="key2text" style="margin-left: 5px;">  answered <b>'no'</b>  </li>
+                
+                <li><img id="key3" src="dontknow.png" alt="dontknow"></li>
+                <li id="key3text" style="margin-left: 5px;">  answered <b>'don't know'</b></li>
+                
+                <li><img id="key4" src="didntanswer.png" alt="didntanswer"></li>
+                <li id="key3text" style="margin-left: 5px;">  didn't answer</li>
+            </ul>
+            <svg id="visual1"></svg>
+            <div id = "checkboxes">
+                <h5 style="padding:0px 0px 0px 10px;">Click on the checkboxes to see how the trends would have changed if the non-respondents had responded in the following manner :</h5>
+            
+                <ul id="ul2">
+                  <li class="cblist"><input id='cv1' type='checkbox' onclick='click1(this);'>    When <b>50%</b> responded <i>'yes'</i>, <b>50%</b> responed <i>'no'</i></label></li>
+                  <li class="cblist"><input id='cv2' type='checkbox' onclick='click2(this);'>    When <b>Everyone</b> responded <i>'yes'</i></label></li>
+                  <li class="cblist"><input id='cv3' type='checkbox' onclick='click3(this);'>    When <b>Everyone</b> responded <i>'no'</i></label></li>
+                  <li class="cblist"><input id='cv4' type='checkbox' onclick='click4(this);'>    When <b>Everyone</b> responded <i>'don't know'</i></label></li>
+                </ul>
+            </div>
+        </div>
+         <br>
+            <br>
+        <hr>
+        <ul id="ul3">
+                <li><h4 style="padding:10px 10px 10px 10px; margin: 0px">Village 2: BALLIA</h4></li>
+                <!--<li><p style="padding:10px 10px 10px 10px; margin: 0px">(Non Response: <b>8%</b>)</p></li>-->
+            </ul>
+            <ul id="key" style="margin-left: 0px; float: left">
+                <li>Key: </li>
+                
+                <li><img id="key1" src="yes.png" alt="yes"></li>
+                <li id="key1text" style="margin-left: 5px;">  answered <b>'yes'</b> </li>
+                
+                <li><img id="key2" src="no.png" alt="no"></li>
+                <li id="key2text" style="margin-left: 5px;">  answered <b>'no'</b>  </li>
+                
+                <li><img id="key3" src="dontknow.png" alt="dontknow"></li>
+                <li id="key3text" style="margin-left: 5px;">  answered <b>'don't know'</b></li>
+                
+                <li><img id="key4" src="didntanswer.png" alt="didntanswer"></li>
+                <li id="key3text" style="margin-left: 5px;">  didn't answer</li>
+            </ul>
+        <svg id="visual2"></svg>
+            <div id = "checkboxes">
+                <h5 style="padding:0px 0px 0px 10px;">Click on the checkboxes to see how the trends would have changed if the non-respondents had responded in the following manner </h5>
+            
+                <ul id="ul2">
+                  <li class="cblist"><input id='cv12' type='checkbox' onclick='click12(this);'>    When <b>50%</b> responded <i>'yes'</i>, <b>50%</b> responed <i>'no'</i></label></li>
+                  <li class="cblist"><input id='cv22' type='checkbox' onclick='click22(this);'>    When <b>Everyone</b> responded <i>'yes'</i></label></li>
+                  <li class="cblist"><input id='cv32' type='checkbox' onclick='click32(this);'>    When <b>Everyone</b> responded <i>'no'</i></label></li>
+                  <li class="cblist"><input id='cv42' type='checkbox' onclick='click42(this);'>    When <b>Everyone</b> responded <i>'don't know'</i></label></li>
+                </ul>
+            </div>
+            <br>
+            <br>
+            
+            <hr>
+            <ul id="ul3">
+                <li><h4 style="padding:10px 10px 10px 10px; margin: 0px">Village 3: BUXUR</h4></li>
+                <!--<li><p style="padding:10px 10px 10px 10px; margin: 0px">(Non Response: <b>2.2%</b>)</p></li>-->
+            </ul>
+            <ul id="key" style="margin-left: 0px; float: left">
+                <li>Key: </li>
+                
+                <li><img id="key1" src="yes.png" alt="yes"></li>
+                <li id="key1text" style="margin-left: 5px;">  answered <b>'yes'</b> </li>
+                
+                <li><img id="key2" src="no.png" alt="no"></li>
+                <li id="key2text" style="margin-left: 5px;">  answered <b>'no'</b>  </li>
+                
+                <li><img id="key3" src="dontknow.png" alt="dontknow"></li>
+                <li id="key3text" style="margin-left: 5px;">  answered <b>'don't know'</b></li>
+                
+                <li><img id="key4" src="didntanswer.png" alt="didntanswer"></li>
+                <li id="key3text" style="margin-left: 5px;">  didn't answer</li>
+            </ul>
+        <svg id="visual3"></svg>
+            <div id = "checkboxes">
+                <h5 style="padding:0px 0px 0px 10px;">Click on the checkboxes to see how the trends would have changed if the non-respondents had responded in the following manner :</h5>
+            
+                <ul id="ul2">
+                  <li class="cblist"><input id='cv13' type='checkbox' onclick='click13(this);'>    When <b>50%</b> responded <i>'yes'</i>, <b>50%</b> responed <i>'no'</i></label></li>
+                  <li class="cblist"><input id='cv23' type='checkbox' onclick='click23(this);'>    When <b>Everyone</b> responded <i>'yes'</i></label></li>
+                  <li class="cblist"><input id='cv33' type='checkbox' onclick='click33(this);'>    When <b>Everyone</b> responded <i>'no'</i></label></li>
+                  <li class="cblist"><input id='cv43' type='checkbox' onclick='click43(this);'>    When <b>Everyone</b> responded <i>'don't know'</i></label></li>
+                </ul>
+            </div>
+        
+        <br>
+        <br>
+        
+        <div id="feedbackDiv">    
+            <form action="https://newschool.co1.qualtrics.com/jfe/form/SV_bOPTI1Q7CI9Q7ZP" target="_blank">
+                <input id="feedback" type="submit" value="Take the Survey" />
+            </form>
+        </div>
+        
+        <p></p>
+        <p></p>
+        <p></p>
+
+        <script>
+        var width = window.innerWidth;
+        var height = 250;
+        
+            var canvas1 = d3.select("#visual1")
+                            .attr("width", width)
+                            .attr("height", height);
+            
+            d3.select('#visual1')
+                    .append("text")
+                    .attr('x', 20)
+                    .attr('y', 40)
+                    .text("Pre survey:");
+            
+            d3.select('#visual1')
+                    .append("text")
+                    .attr('x', 20)
+                    .attr('y', 140)
+                    .text("Post survey:");        
+            
+            baseVisualPre(50);
+            baseVisualPost(150);
+            
+            function baseVisualPre(dist){
+            
+                var x = -5;
+                var y = 0;
+                
+                for(var i=1; i<=data[0]['preTot']; i++){
+                
+                var color = "";
+                var clas = "";
+                if(i < data[0]['preYes']){ color = "#ffa124"; clas = "preYes1"; }else if(i< data[0]['preYes'] + data[0]['preNo']){ color = "#35b9ed"; clas = "preNo1";}else if(i <= data[0]['preYes'] + data[0]['preNo'] + data[0]['preDk']){color = "#ffb8f2"; clas = "preDk1";};
+                    if(y%50 == 0){
+                        x+=5;
+                        y=0;
+                        d3.select('#visual1')
+                            .append('rect')
+                            .attr("class", clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + dist)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                        y+=5;    
+                    }else{    
+                   d3.select('#visual1')
+                            .append('rect')
+                            .attr("class", clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + dist)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                    y+=5;
+                    }
+                }
+                 
+            }
+            
+            function click1(cv1){
+                if(cv1.checked){
+                    document.getElementById("cv2").checked = false;
+                    document.getElementById("cv3").checked = false;
+                    document.getElementById("cv4").checked = false;
+                    // display("check");
+                var x = -5;
+                var y = 0;
+                
+                for(var i=1; i<=data[0]['preTot']; i++){
+                
+                var color = "";
+                var clas = "";
+                if(i < data[0]['postYes']){ color = "#ffa124"; clas = "postYes1"; }else if(i< data[0]['postYes'] + data[0]['yes50']){ color = "#ffcc88"; clas = "postYes50-1";}else if(i< data[0]['postYes'] + data[0]['yes50'] + data[0]['postNo']){ color = "#35b9ed" ; clas = "postNo1";}else if(i< data[0]['postYes'] + data[0]['yes50'] + data[0]['postNo'] + data[0]['no50']){color = "#c1e0ea"; clas = "postNo50-1";}else if(i <= data[0]['postYes'] + data[0]['yes50'] + data[0]['postNo'] + data[0]['no50'] + data[0]['postDk']){color = "#ffb8f2"; clas = "postDk1";};
+    
+                    if(y%50 == 0){
+                        x+=5;
+                        y=0;
+                        d3.select('#visual1')
+                            .append('rect')
+                            .attr("class", clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                        y+=5;    
+                    }else{    
+                   d3.select('#visual1')
+                            .append('rect')
+                            .attr("class", clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                    y+=5;
+                    }
+                }  
+                
+// ********************
+//      POST : 50-50
+// ********************
+            
+            // POST YES 
+            d3.selectAll(".postYes1")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[0]['postYes'] + "</b>" + " responded 'yes' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+           
+           
+            d3.selectAll(".postYes50-1")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[0]['yes50'] + "</b>" + " may have responded 'yes' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+            
+            d3.selectAll(".postNo1")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[0]['postNo'] + "</b>" + " responded 'no' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                }); 
+            
+            d3.selectAll(".postNo50-1")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[0]['no50'] + "</b>" + " may have responded 'no' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+            
+            d3.selectAll(".postDk1")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[0]['postDk'] + "</b>" + " responded 'don't know' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });     
+            
+                    
+                }else{
+                    // display("not checked");
+                    baseVisualPost(150);
+                }
+            }
+            
+            function click2(cv2){
+                if(cv2.checked){
+                    document.getElementById("cv1").checked = false;
+                    document.getElementById("cv3").checked = false;
+                    document.getElementById("cv4").checked = false;
+                    // display("check");
+                var x = -5;
+                var y = 0;
+                
+                for(var i=1; i<=data[0]['preTot']; i++){
+                
+                var color = "";
+                var clas = "";
+                
+                if(i < data[0]['postYes']){ color = "#ffa124"; clas = "postYes1"; }else if(i< data[0]['postYes'] + data[0]['allYes']){ color = "#ffcc88"; clas = "allYes1";}else if(i< data[0]['postYes'] + data[0]['allYes'] + data[0]['postNo']){ color = "#35b9ed"; clas = "postNo1"; }else if(i<= data[0]['postYes'] + data[0]['allYes'] + data[0]['postNo'] + data[0]['postDk']){ color = "#ffb8f2"; clas = "postDk1";};
+                    if(y%50 == 0){
+                        x+=5;
+                        y=0;
+                        d3.select('#visual1')
+                            .append('rect')
+                            .attr("class", clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                        y+=5;    
+                    }else{    
+                   d3.select('#visual1')
+                            .append('rect')
+                            .attr("class", clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                    y+=5;
+                    }
+                }    
+// ********************
+//      POST 
+// ********************
+            
+            // POST YES 
+            d3.selectAll(".postYes1")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[0]['postYes'] + "</b>" + " responded 'yes' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+           
+           
+            d3.selectAll(".allYes1")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[0]['allYes'] + "</b>" + " may have responded 'yes' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+            
+            d3.selectAll(".postNo1")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[0]['postNo'] + "</b>" + " responded 'no' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                }); 
+            
+            
+            
+            d3.selectAll(".postDk1")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[0]['postDk'] + "</b>" + " responded 'don't know' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });     
+                             
+                    
+                }else{
+                    // display("not checked");
+                    baseVisualPost(150);
+                }
+            }
+            
+            function click3(cv3){
+                if(cv3.checked){
+                    document.getElementById("cv1").checked = false;
+                    document.getElementById("cv2").checked = false;
+                    document.getElementById("cv4").checked = false;
+                    // display("check");
+                var x = -5;
+                var y = 0;
+                
+                for(var i=1; i<=data[0]['preTot']; i++){
+                
+                var color = "";
+                var clas = "";
+                
+                if(i < data[0]['postYes']){ color = "#ffa124";  clas = "postYes1"; }else if(i< data[0]['postYes'] + data[0]['postNo']){ color = "#35b9ed"; clas = "postNo1" }else if(i< data[0]['postYes'] + data[0]['postNo'] + data[0]['allNo']){ color = "#c1e0ea"; clas = 'allNo1' }else if(i<= data[0]['postYes'] + data[0]['postNo'] + data[0]['allNo'] + data[0]['postDk']){ color = "#ffb8f2"; clas = 'postDk1'};
+                    if(y%50 == 0){
+                        x+=5;
+                        y=0;
+                        d3.select('#visual1')
+                            .append('rect')
+                            .attr('class', clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                        y+=5;    
+                    }else{    
+                   d3.select('#visual1')
+                            .append('rect')
+                            .attr('class', clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                    y+=5;
+                    }
+                } 
+                
+    // POST YES 
+            d3.selectAll(".postYes1")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[0]['postYes'] + "</b>" + " responded 'yes' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+           
+           
+            d3.selectAll(".postNo1")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[0]['postNo'] + "</b>" + " responded 'no' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+            
+            d3.selectAll(".allNo1")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[0]['allNo'] + "</b>" + " may have responded 'no' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                }); 
+            
+            
+            
+            d3.selectAll(".postDk1")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[0]['postDk'] + "</b>" + " responded 'don't know' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });     
+                             
+                
+                    
+                }else{
+                    // display("not checked");
+                    baseVisualPost(150);
+                }
+            }
+            
+            function click4(cv4){
+                if(cv4.checked){
+                    document.getElementById("cv1").checked = false;
+                    document.getElementById("cv2").checked = false;
+                    document.getElementById("cv3").checked = false;
+                    // display("check");
+                var x = -5;
+                var y = 0;
+                
+                for(var i=1; i<=data[0]['preTot']; i++){
+                
+                var color = "";
+                var clas = "";
+                if(i < data[0]['postYes']){ color = "#ffa124";  clas = 'postYes1'; }else if(i< data[0]['postYes'] + data[0]['postNo']){ color = "#35b9ed";  clas = 'postNo1'; }else if(i< data[0]['postYes'] + data[0]['postNo'] + data[0]['postDk']){ color = "#ffb8f2"; clas = 'postDk1';}else if(i<= data[0]['postYes'] + data[0]['postNo'] + data[0]['postDk'] + data[0]['allDk']){color = "#ffebfc"; clas = 'allDk1';};
+                    if(y%50 == 0){
+                        x+=5;
+                        y=0;
+                        d3.select('#visual1')
+                            .append('rect')
+                            .attr("class", clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                        y+=5;    
+                    }else{    
+                   d3.select('#visual1')
+                            .append('rect')
+                            .attr("class", clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                    y+=5;
+                    }
+                }
+                
+            d3.selectAll(".postYes1")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[0]['postYes'] + "</b>" + " responded 'yes' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+           
+           
+            d3.selectAll(".postNo1")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[0]['postNo'] + "</b>" + " responded 'no' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+            
+            d3.selectAll(".postDk1")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[0]['postDk'] + "</b>" + " responded 'don't know' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                }); 
+            
+            
+            
+            d3.selectAll(".allDk1")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[0]['allDk'] + "</b>" + " may have responded 'don't know' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });     
+                     
+                
+          }else{
+                    // display("not checked");
+                    baseVisualPost(150);
+                }
+            }
+            
+            function baseVisualPost(dist){
+                
+                var x = -5;
+                var y = 0;
+                
+                for(var i=1; i<=data[0]['preTot']; i++){
+                
+                var color = "";
+                var clas = "";
+                if(i < data[0]['postYes']){ color = "#ffa124"; clas = "postYes1";}else if(i< data[0]['postYes'] + data[0]['postNo']){ color = "#35b9ed"; clas = "postNo1"; }else if(i < data[0]['postYes'] + data[0]['postNo'] + data[0]['postDk']){color = "#ffb8f2"; clas = "postDk1";}else if(i <= data[0]['postYes'] + data[0]['postNo'] + data[0]['postDk'] + data[0]['nonResponse']){color = "#efefef"; clas = "postNonResponse1";};  
+                    if(y%50 == 0){
+                        x+=5;
+                        y=0;
+                        d3.select('#visual1')
+                            .append('rect')
+                            .attr('x', x + 20)
+                            .attr('class', clas)
+                            .attr('y', y + dist)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                        y+=5;    
+                    }else{    
+                   d3.select('#visual1')
+                            .append('rect')
+                            .attr('x', x + 20)
+                            .attr('class', clas)
+                            .attr('y', y + dist)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                    y+=5;
+                    }
+                }
+               
+            d3.selectAll(".postYes1")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[0]['postYes'] + "</b>" + " responded 'yes' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+           
+           
+            d3.selectAll(".postNo1")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[0]['postNo'] + "</b>" + " responded 'no' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+            
+            d3.selectAll(".postDk1")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[0]['postDk'] + "</b>" + " responded 'don't know' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                }); 
+            
+            
+            
+            d3.selectAll(".postNonResponse1")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[0]['nonResponse'] + "</b>" + " did not response " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });     
+                                    
+                
+            }
+            
+            
+            d3.selectAll(".preYes1")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+            
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[0]['preYes'] + "</b>" + " responded 'yes' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+            
+            var div = d3.select("body").append("div")	
+                                    .attr("class", "tooltip")				
+                                    .style("opacity", 0)
+                                    .attr("x", "500");
+            
+            d3.selectAll(".preNo1")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+            
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[0]['preNo'] + "</b>" + " responded 'no' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+            
+            var div = d3.select("body").append("div")	
+                                    .attr("class", "tooltip")				
+                                    .style("opacity", 0)
+                                    .attr("x", "500");
+            
+            d3.selectAll(".preDk1")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[0]['preDk'] + "</b>" + " responded 'don't know " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+            
+            var div = d3.select("body").append("div")	
+                                    .attr("class", "tooltip")				
+                                    .style("opacity", 0)
+                                    .attr("x", "500");
+                                    
+           // ******************************
+           // second visualization
+           // ******************************
+           
+           var canvas2 = d3.select("#visual2")
+                            .attr("width", width)
+                            .attr("height", height);
+            
+            d3.select('#visual2')
+                    .append("text")
+                    .attr('x', 20)
+                    .attr('y', 40)
+                    .text("Pre survey:");
+            
+            d3.select('#visual2')
+                    .append("text")
+                    .attr('x', 20)
+                    .attr('y', 140)
+                    .text("Post survey:");  
+                    
+            baseVisualPre2(50);
+            baseVisualPost2(150);        
+            
+           function baseVisualPre2(dist){
+            
+                var x = -5;
+                var y = 0;
+                
+                for(var i=1; i<=data[1]['preTot']; i++){
+                
+                var color = "";
+                var clas = "";
+                if(i < data[1]['preYes']){ color = "#ffa124"; clas = "preYes2"; }else if(i< data[1]['preYes'] + data[1]['preNo']){ color = "#35b9ed"; clas = "preNo2";}else if(i <= data[1]['preYes'] + data[1]['preNo'] + data[1]['preDk']){color = "#ffb8f2"; clas = "preDk2";};
+                    if(y%50 == 0){
+                        x+=5;
+                        y=0;
+                        d3.select('#visual2')
+                            .append('rect')
+                            .attr("class", clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + dist)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                        y+=5;    
+                    }else{    
+                   d3.select('#visual2')
+                            .append('rect')
+                            .attr("class", clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + dist)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                    y+=5;
+                    }
+                }
+            
+            d3.selectAll(".preYes2")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+            
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[1]['preYes'] + "</b>" + " responded 'yes' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+            
+            var div = d3.select("body").append("div")	
+                                    .attr("class", "tooltip")				
+                                    .style("opacity", 0)
+                                    .attr("x", "500");
+            
+            d3.selectAll(".preNo2")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+            
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[1]['preNo'] + "</b>" + " responded 'no' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+            
+            
+            d3.selectAll(".preDk2")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[1]['preDk'] + "</b>" + " responded 'don't know " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+            
+           
+                 
+            }
+           
+           function baseVisualPost2(dist){
+                
+                var x = -5;
+                var y = 0;
+                
+                for(var i=1; i<=data[1]['preTot']; i++){
+                
+                var color = "";
+                var clas = "";
+                if(i < data[1]['postYes']){ color = "#ffa124"; clas = "postYes2";}else if(i< data[1]['postYes'] + data[1]['postNo']){ color = "#35b9ed"; clas = "postNo2"; }else if(i < data[1]['postYes'] + data[1]['postNo'] + data[1]['postDk']){color = "#ffb8f2"; clas = "postDk2";}else if(i <= data[1]['postYes'] + data[1]['postNo'] + data[1]['postDk'] + data[1]['nonResponse']){color = "#efefef"; clas = "postNonResponse2";};  
+                    if(y%50 == 0){
+                        x+=5;
+                        y=0;
+                        d3.select('#visual2')
+                            .append('rect')
+                            .attr('x', x + 20)
+                            .attr('class', clas)
+                            .attr('y', y + dist)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                        y+=5;    
+                    }else{    
+                   d3.select('#visual2')
+                            .append('rect')
+                            .attr('x', x + 20)
+                            .attr('class', clas)
+                            .attr('y', y + dist)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                    y+=5;
+                    }
+                }
+               
+            d3.selectAll(".postYes2")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[1]['postYes'] + "</b>" + " responded 'yes' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+           
+           
+            d3.selectAll(".postNo2")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[1]['postNo'] + "</b>" + " responded 'no' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+            
+            d3.selectAll(".postDk2")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[1]['postDk'] + "</b>" + " responded 'don't know' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                }); 
+            
+            
+            
+            d3.selectAll(".postNonResponse2")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[1]['nonResponse'] + "</b>" + " did not response " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });     
+                                    
+                
+            }
+           function click12(cv12){
+                if(cv12.checked){
+                    document.getElementById("cv22").checked = false;
+                    document.getElementById("cv32").checked = false;
+                    document.getElementById("cv42").checked = false;
+                    // display("check");
+                var x = -5;
+                var y = 0;
+                
+                for(var i=1; i<=data[1]['preTot']; i++){
+                
+                var color = "";
+                var clas = "";
+                if(i < data[1]['postYes']){ color = "#ffa124"; clas = "postYes2"; }else if(i< data[1]['postYes'] + data[1]['yes50']){ color = "#ffcc88"; clas = "postYes50-2";}else if(i< data[1]['postYes'] + data[1]['yes50'] + data[1]['postNo']){ color = "#35b9ed" ; clas = "postNo2";}else if(i< data[1]['postYes'] + data[1]['yes50'] + data[1]['postNo'] + data[1]['no50']){color = "#c1e0ea"; clas = "postNo50-2";}else if(i <= data[1]['postYes'] + data[1]['yes50'] + data[1]['postNo'] + data[1]['no50'] + data[1]['postDk']){color = "#ffb8f2"; clas = "postDk2";};
+    
+                    if(y%50 == 0){
+                        x+=5;
+                        y=0;
+                        d3.select('#visual2')
+                            .append('rect')
+                            .attr("class", clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                        y+=5;    
+                    }else{    
+                   d3.select('#visual2')
+                            .append('rect')
+                            .attr("class", clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                    y+=5;
+                    }
+                }  
+                
+// ********************
+//      POST : 50-50
+// ********************
+            
+            // POST YES 
+            d3.selectAll(".postYes2")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[1]['postYes'] + "</b>" + " responded 'yes' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+           
+           
+            d3.selectAll(".postYes50-2")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[1]['yes50'] + "</b>" + " may have responded 'yes' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+            
+            d3.selectAll(".postNo2")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[1]['postNo'] + "</b>" + " responded 'no' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                }); 
+            
+            d3.selectAll(".postNo50-2")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[1]['no50'] + "</b>" + " may have responded 'no' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+            
+            d3.selectAll(".postDk2")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[1]['postDk'] + "</b>" + " responded 'don't know' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });     
+            
+                    
+                }else{
+                    // display("not checked");
+                    baseVisualPost2(150);
+                }
+            }
+           function click22(cv22){
+                if(cv22.checked){
+                    document.getElementById("cv12").checked = false;
+                    document.getElementById("cv32").checked = false;
+                    document.getElementById("cv42").checked = false;
+                    // display("check");
+                var x = -5;
+                var y = 0;
+                
+                for(var i=1; i<=data[1]['preTot']; i++){
+                
+                var color = "";
+                var clas = "";
+                
+                if(i < data[1]['postYes']){ color = "#ffa124"; clas = "postYes2"; }else if(i< data[1]['postYes'] + data[1]['allYes']){ color = "#ffcc88"; clas = "allYes2";}else if(i< data[1]['postYes'] + data[1]['allYes'] + data[1]['postNo']){ color = "#35b9ed"; clas = "postNo2"; }else if(i<= data[1]['postYes'] + data[1]['allYes'] + data[1]['postNo'] + data[1]['postDk']){ color = "#ffb8f2"; clas = "postDk2";};
+                    if(y%50 == 0){
+                        x+=5;
+                        y=0;
+                        d3.select('#visual2')
+                            .append('rect')
+                            .attr("class", clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                        y+=5;    
+                    }else{    
+                   d3.select('#visual2')
+                            .append('rect')
+                            .attr("class", clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                    y+=5;
+                    }
+                }    
+// ********************
+//      POST 
+// ********************
+            
+            // POST YES 
+            d3.selectAll(".postYes1")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[1]['postYes'] + "</b>" + " responded 'yes' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+           
+           
+            d3.selectAll(".allYes2")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[1]['allYes'] + "</b>" + " may have responded 'yes' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+            
+            d3.selectAll(".postNo2")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[1]['postNo'] + "</b>" + " responded 'no' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                }); 
+            
+            
+            
+            d3.selectAll(".postDk2")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[1]['postDk'] + "</b>" + " responded 'don't know' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });     
+                             
+                    
+                }else{
+                    // display("not checked");
+                    baseVisualPost2(150);
+                }
+            }
+           function click32(cv32){
+                if(cv32.checked){
+                    document.getElementById("cv12").checked = false;
+                    document.getElementById("cv22").checked = false;
+                    document.getElementById("cv42").checked = false;
+                    // display("check");
+                var x = -5;
+                var y = 0;
+                
+                for(var i=1; i<=data[1]['preTot']; i++){
+                
+                var color = "";
+                var clas = "";
+                
+                if(i < data[1]['postYes']){ color = "#ffa124";  clas = "postYes2"; }else if(i< data[1]['postYes'] + data[1]['postNo']){ color = "#35b9ed"; clas = "postNo2" }else if(i< data[1]['postYes'] + data[1]['postNo'] + data[1]['allNo']){ color = "#c1e0ea"; clas = 'allNo2' }else if(i<= data[1]['postYes'] + data[1]['postNo'] + data[1]['allNo'] + data[1]['postDk']){ color = "#ffb8f2"; clas = 'postDk2'};
+                    if(y%50 == 0){
+                        x+=5;
+                        y=0;
+                        d3.select('#visual2')
+                            .append('rect')
+                            .attr('class', clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                        y+=5;    
+                    }else{    
+                   d3.select('#visual2')
+                            .append('rect')
+                            .attr('class', clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                    y+=5;
+                    }
+                } 
+                
+    // POST YES 
+            d3.selectAll(".postYes2")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[1]['postYes'] + "</b>" + " responded 'yes' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+           
+           
+            d3.selectAll(".postNo2")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[1]['postNo'] + "</b>" + " responded 'no' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+            
+            d3.selectAll(".allNo2")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[1]['allNo'] + "</b>" + " may have responded 'no' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                }); 
+            
+            
+            
+            d3.selectAll(".postDk2")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[1]['postDk'] + "</b>" + " responded 'don't know' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });     
+                             
+                
+                    
+                }else{
+                    // display("not checked");
+                    baseVisualPost2(150);
+                }
+            }
+           function click42(cv42){
+                if(cv42.checked){
+                    document.getElementById("cv12").checked = false;
+                    document.getElementById("cv22").checked = false;
+                    document.getElementById("cv32").checked = false;
+                    // display("check");
+                var x = -5;
+                var y = 0;
+                
+                for(var i=1; i<=data[1]['preTot']; i++){
+                
+                var color = "";
+                var clas = "";
+                if(i < data[1]['postYes']){ color = "#ffa124";  clas = 'postYes4'; }else if(i< data[1]['postYes'] + data[1]['postNo']){ color = "#35b9ed";  clas = 'postNo4'; }else if(i< data[1]['postYes'] + data[1]['postNo'] + data[1]['postDk']){ color = "#ffb8f2"; clas = 'postDk4';}else if(i<= data[1]['postYes'] + data[1]['postNo'] + data[1]['postDk'] + data[1]['allDk']){color = "#ffebfc"; clas = 'allDk4';};
+                    if(y%50 == 0){
+                        x+=5;
+                        y=0;
+                        d3.select('#visual2')
+                            .append('rect')
+                            .attr("class", clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                        y+=5;    
+                    }else{    
+                   d3.select('#visual2')
+                            .append('rect')
+                            .attr("class", clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                    y+=5;
+                    }
+                }
+                
+            d3.selectAll(".postYes4")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[1]['postYes'] + "</b>" + " responded 'yes' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+           
+           
+            d3.selectAll(".postNo4")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[1]['postNo'] + "</b>" + " responded 'no' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+            
+            d3.selectAll(".postDk4")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[1]['postDk'] + "</b>" + " responded 'don't know' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                }); 
+            
+            
+            
+            d3.selectAll(".allDk4")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[1]['allDk'] + "</b>" + " may have responded 'don't know' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });     
+                     
+                
+          }else{
+                    // display("not checked");
+                    baseVisualPost2(150);
+                }
+            }
+            
+            // ******************************
+            // third visualization
+            // ******************************
+           
+           var canvas2 = d3.select("#visual3")
+                            .attr("width", width)
+                            .attr("height", height);
+            
+            d3.select('#visual3')
+                    .append("text")
+                    .attr('x', 20)
+                    .attr('y', 40)
+                    .text("Pre survey:");
+            
+            d3.select('#visual3')
+                    .append("text")
+                    .attr('x', 20)
+                    .attr('y', 140)
+                    .text("Post survey:");  
+                    
+            baseVisualPre3(50);
+            baseVisualPost3(150);        
+            
+            function baseVisualPre3(dist){
+            
+                var x = -5;
+                var y = 0;
+                
+                for(var i=1; i<=data[2]['preTot']; i++){
+                
+                var color = "";
+                var clas = "";
+                if(i < data[2]['preYes']){ color = "#ffa124"; clas = "preYes3"; }else if(i< data[2]['preYes'] + data[2]['preNo']){ color = "#35b9ed"; clas = "preNo3";}else if(i <= data[2]['preYes'] + data[2]['preNo'] + data[2]['preDk']){color = "#ffb8f2"; clas = "preDk3";};
+                    if(y%50 == 0){
+                        x+=5;
+                        y=0;
+                        d3.select('#visual3')
+                            .append('rect')
+                            .attr("class", clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + dist)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                        y+=5;    
+                    }else{    
+                   d3.select('#visual3')
+                            .append('rect')
+                            .attr("class", clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + dist)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                    y+=5;
+                    }
+                }
+            
+            d3.selectAll(".preYes3")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+            
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[2]['preYes'] + "</b>" + " responded 'yes' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+            
+            var div = d3.select("body").append("div")	
+                                    .attr("class", "tooltip")				
+                                    .style("opacity", 0)
+                                    .attr("x", "500");
+            
+            d3.selectAll(".preNo3")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+            
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[2]['preNo'] + "</b>" + " responded 'no' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+            
+            
+            d3.selectAll(".preDk3")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[2]['preDk'] + "</b>" + " responded 'don't know " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+            
+           
+                 
+            }
+           
+           function baseVisualPost3(dist){
+                
+                var x = -5;
+                var y = 0;
+                
+                for(var i=1; i<=data[2]['preTot']; i++){
+                
+                var color = "";
+                var clas = "";
+                if(i < data[2]['postYes']){ color = "#ffa124"; clas = "postYes3";}else if(i< data[2]['postYes'] + data[2]['postNo']){ color = "#35b9ed"; clas = "postNo3"; }else if(i < data[2]['postYes'] + data[2]['postNo'] + data[2]['postDk']){color = "#ffb8f2"; clas = "postDk3";}else if(i <= data[2]['postYes'] + data[2]['postNo'] + data[2]['postDk'] + data[2]['nonResponse']){color = "#efefef"; clas = "postNonResponse3";};  
+                    if(y%50 == 0){
+                        x+=5;
+                        y=0;
+                        d3.select('#visual3')
+                            .append('rect')
+                            .attr('x', x + 20)
+                            .attr('class', clas)
+                            .attr('y', y + dist)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                        y+=5;    
+                    }else{    
+                   d3.select('#visual3')
+                            .append('rect')
+                            .attr('x', x + 20)
+                            .attr('class', clas)
+                            .attr('y', y + dist)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                    y+=5;
+                    }
+                }
+               
+            d3.selectAll(".postYes3")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[2]['postYes'] + "</b>" + " responded 'yes' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+           
+           
+            d3.selectAll(".postNo3")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[2]['postNo'] + "</b>" + " responded 'no' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+            
+            d3.selectAll(".postDk3")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[2]['postDk'] + "</b>" + " responded 'don't know' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                }); 
+            
+            
+            
+            d3.selectAll(".postNonResponse3")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[2]['nonResponse'] + "</b>" + " did not response " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });     
+                                    
+                
+            }
+           
+           function click13(cv13){
+                if(cv13.checked){
+                    document.getElementById("cv23").checked = false;
+                    document.getElementById("cv33").checked = false;
+                    document.getElementById("cv43").checked = false;
+                    // display("check");
+                var x = -5;
+                var y = 0;
+                
+                for(var i=1; i<=data[2]['preTot']; i++){
+                
+                var color = "";
+                var clas = "";
+                if(i < data[2]['postYes']){ color = "#ffa124"; clas = "postYes3"; }else if(i< data[2]['postYes'] + data[2]['yes50']){ color = "#ffcc88"; clas = "postYes50-3";}else if(i< data[2]['postYes'] + data[2]['yes50'] + data[2]['postNo']){ color = "#35b9ed" ; clas = "postNo3";}else if(i< data[2]['postYes'] + data[2]['yes50'] + data[2]['postNo'] + data[2]['no50']){color = "#c1e0ea"; clas = "postNo50-3";}else if(i <= data[2]['postYes'] + data[2]['yes50'] + data[2]['postNo'] + data[2]['no50'] + data[2]['postDk']){color = "#ffb8f2"; clas = "postDk3";};
+    
+                    if(y%50 == 0){
+                        x+=5;
+                        y=0;
+                        d3.select('#visual3')
+                            .append('rect')
+                            .attr("class", clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                        y+=5;    
+                    }else{    
+                   d3.select('#visual3')
+                            .append('rect')
+                            .attr("class", clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                    y+=5;
+                    }
+                }  
+                
+// ********************
+//      POST : 50-50
+// ********************
+            
+            // POST YES 
+            d3.selectAll(".postYes3")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[2]['postYes'] + "</b>" + " responded 'yes' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+           
+           
+            d3.selectAll(".postYes50-3")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[2]['yes50'] + "</b>" + " may have responded 'yes' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+            
+            d3.selectAll(".postNo3")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[2]['postNo'] + "</b>" + " responded 'no' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                }); 
+            
+            d3.selectAll(".postNo50-3")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[2]['no50'] + "</b>" + " may have responded 'no' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+            
+            d3.selectAll(".postDk3")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[2]['postDk'] + "</b>" + " responded 'don't know' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });     
+            
+                    
+                }else{
+                    // display("not checked");
+                    baseVisualPost3(150);
+                }
+            }
+           function click23(cv23){
+                if(cv23.checked){
+                    document.getElementById("cv13").checked = false;
+                    document.getElementById("cv33").checked = false;
+                    document.getElementById("cv43").checked = false;
+                    // display("check");
+                var x = -5;
+                var y = 0;
+                
+                for(var i=1; i<=data[2]['preTot']; i++){
+                
+                var color = "";
+                var clas = "";
+                
+                if(i < data[2]['postYes']){ color = "#ffa124"; clas = "postYes3"; }else if(i< data[2]['postYes'] + data[2]['allYes']){ color = "#ffcc88"; clas = "allYes3";}else if(i< data[2]['postYes'] + data[2]['allYes'] + data[2]['postNo']){ color = "#35b9ed"; clas = "postNo3"; }else if(i<= data[2]['postYes'] + data[2]['allYes'] + data[2]['postNo'] + data[2]['postDk']){ color = "#ffb8f2"; clas = "postDk3";};
+                    if(y%50 == 0){
+                        x+=5;
+                        y=0;
+                        d3.select('#visual3')
+                            .append('rect')
+                            .attr("class", clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                        y+=5;    
+                    }else{    
+                   d3.select('#visual3')
+                            .append('rect')
+                            .attr("class", clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                    y+=5;
+                    }
+                }    
+// ********************
+//      POST 
+// ********************
+            
+            // POST YES 
+            d3.selectAll(".postYes3")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[2]['postYes'] + "</b>" + " responded 'yes' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+           
+           
+            d3.selectAll(".allYes3")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[2]['allYes'] + "</b>" + " may have responded 'yes' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+            
+            d3.selectAll(".postNo3")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[2]['postNo'] + "</b>" + " responded 'no' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                }); 
+            
+            
+            
+            d3.selectAll(".postDk3")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[2]['postDk'] + "</b>" + " responded 'don't know' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });     
+                             
+                    
+                }else{
+                    // display("not checked");
+                    baseVisualPost3(150);
+                }
+            }
+           function click33(cv33){
+                if(cv33.checked){
+                    document.getElementById("cv13").checked = false;
+                    document.getElementById("cv23").checked = false;
+                    document.getElementById("cv43").checked = false;
+                    // display("check");
+                var x = -5;
+                var y = 0;
+                
+                for(var i=1; i<=data[2]['preTot']; i++){
+                
+                var color = "";
+                var clas = "";
+                
+                if(i < data[2]['postYes']){ color = "#ffa124";  clas = "postYes3"; }else if(i< data[2]['postYes'] + data[2]['postNo']){ color = "#35b9ed"; clas = "postNo3" }else if(i< data[2]['postYes'] + data[2]['postNo'] + data[2]['allNo']){ color = "#c1e0ea"; clas = 'allNo3' }else if(i<= data[2]['postYes'] + data[2]['postNo'] + data[2]['allNo'] + data[2]['postDk']){ color = "#ffb8f2"; clas = 'postDk3'};
+                    if(y%50 == 0){
+                        x+=5;
+                        y=0;
+                        d3.select('#visual3')
+                            .append('rect')
+                            .attr('class', clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                        y+=5;    
+                    }else{    
+                   d3.select('#visual3')
+                            .append('rect')
+                            .attr('class', clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                    y+=5;
+                    }
+                } 
+                
+    // POST YES 
+            d3.selectAll(".postYes3")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[2]['postYes'] + "</b>" + " responded 'yes' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+           
+           
+            d3.selectAll(".postNo3")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[2]['postNo'] + "</b>" + " responded 'no' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+            
+            d3.selectAll(".allNo3")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[2]['allNo'] + "</b>" + " may have responded 'no' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                }); 
+            
+            
+            
+            d3.selectAll(".postDk3")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[2]['postDk'] + "</b>" + " responded 'don't know' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });     
+                             
+                
+                    
+                }else{
+                    // display("not checked");
+                    baseVisualPost3(150);
+                }
+            }
+           function click43(cv43){
+                if(cv43.checked){
+                    document.getElementById("cv13").checked = false;
+                    document.getElementById("cv23").checked = false;
+                    document.getElementById("cv33").checked = false;
+                    // display("check");
+                var x = -5;
+                var y = 0;
+                
+                for(var i=1; i<=data[2]['preTot']; i++){
+                
+                var color = "";
+                var clas = "";
+                if(i < data[2]['postYes']){ color = "#ffa124";  clas = 'postYes3'; }else if(i< data[2]['postYes'] + data[2]['postNo']){ color = "#35b9ed";  clas = 'postNo3'; }else if(i< data[2]['postYes'] + data[2]['postNo'] + data[2]['postDk']){ color = "#ffb8f2"; clas = 'postDk3';}else if(i<= data[2]['postYes'] + data[2]['postNo'] + data[2]['postDk'] + data[2]['allDk']){color = "#ffebfc"; clas = 'allDk3';};
+                    if(y%50 == 0){
+                        x+=5;
+                        y=0;
+                        d3.select('#visual3')
+                            .append('rect')
+                            .attr("class", clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                        y+=5;    
+                    }else{    
+                   d3.select('#visual3')
+                            .append('rect')
+                            .attr("class", clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                    y+=5;
+                    }
+                }
+                
+            d3.selectAll(".postYes3")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[2]['postYes'] + "</b>" + " responded 'yes' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+           
+           
+            d3.selectAll(".postNo3")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[2]['postNo'] + "</b>" + " responded 'no' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+            
+            d3.selectAll(".postDk3")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[2]['postDk'] + "</b>" + " responded 'don't know' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                }); 
+            
+            
+            
+            d3.selectAll(".allDk3")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[2]['allDk'] + "</b>" + " may have responded 'don't know' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });     
+                     
+                
+          }else{
+                    // display("not checked");
+                    baseVisualPost3(150);
+                }
+            }
+        
+            
+        </script>
+    </body>
+</html>

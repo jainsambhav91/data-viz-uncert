@@ -4,6 +4,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://d3js.org/d3.v4.min.js"></script>
         <script src="https://d3js.org/d3-drag.v1.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script type="text/javascript" src="data.js"></script>
         <style>
         
@@ -12,21 +13,47 @@
             margin: 20px 20px 20px 20px;
         }
         
-        img {
+        .img {
               
               width:600px;
               height:auto;
               float: right;
               padding: 0px 0px 0px 20px;
             }
+            
+        #img2{
+            float: left;
+            height: 20px;
+            width: auto;
+            margin-left: 20px;
+        }    
+        #key1{
+            height: 20px;
+            width: auto;
+            margin-left: 30px;
+        }
+        #key2{
+           height: 20px;
+           width: auto;
+           margin-left: 30px;
+        }
+        #key3{
+         height: 20px;
+         width: auto;
+         margin-left: 30px;
+        }
+        #key4{
+           height: 20px;
+           width: auto;
+           margin-left: 30px;
+        }
+       
        
         #menu{
            margin-top: 100px;
            } 
         
         #ul {
-            /*position:relative;*/
-            /*margin-top: 100px;*/
             width: 100%;
             list-style-type: none;
             padding: 0;
@@ -46,6 +73,13 @@
             list-style-type: none;
             padding: 0;
             overflow: hidden;
+        }
+        
+        #key{
+            list-style-type: none;
+            margin-top: 10px;
+            margin-left: 0px;
+            
         }
             
         li {
@@ -108,7 +142,6 @@
             cursor: pointer;
        }
        
-                        
         </style>
     </head>
     <body>
@@ -120,7 +153,6 @@
         <p>.. </p>
         <p>.. </p>
         <p>.. </p>
-        
         <h4>About the data</h4>
         
             <div id="aboutdata">
@@ -147,9 +179,24 @@
                 <li><h4 style="padding:10px 10px 10px 10px; margin: 0px">District 1: ARAH</h4></li>
                 <li><p style="padding:10px 10px 10px 10px; margin: 0px">(Non Response: <b>24%</b>)</p></li>
             </ul>
+            <ul id="key" style="margin-left: 0px; float: left">
+                <li>Key: </li>
+                
+                <li><img id="key1" src="yes.png" alt="yes"></li>
+                <li id="key1text" style="margin-left: 5px;">  answered <b>'yes'</b> </li>
+                
+                <li><img id="key2" src="no.png" alt="no"></li>
+                <li id="key2text" style="margin-left: 5px;">  answered <b>'no'</b>  </li>
+                
+                <li><img id="key3" src="dontknow.png" alt="dontknow"></li>
+                <li id="key3text" style="margin-left: 5px;">  answered <b>'don't know'</b></li>
+                
+                <li><img id="key4" src="didntanswer.png" alt="didntanswer"></li>
+                <li id="key3text" style="margin-left: 5px;">  didn't answer</li>
+            </ul>
             <svg id="visual2"></svg>
             <div id = "checkboxes">
-                <h5 style="padding:0px 0px 0px 10px;">Simlulating response of non-respondents in <b>POST</b> survey:</h5>
+                <h5 style="padding:0px 0px 0px 10px;">What would have happened if the non-respondents had responded in the following manner:</h5>
             
                 <ul id="ul2">
                   <li class="cblist"><input id='cv1' type='checkbox' onclick='click1(this);'><b>    50%</b> responded <i>'yes'</i>, <b>50%</b> responed <i>'no'</i></label></li>
@@ -166,7 +213,20 @@
                 <input id="feedback" type="submit" value="Give feedback" />
             </form>
         </div>
-            
+        
+        <p><br><br><br><br><br><br><br><br><br><br><br><br>.</p>
+        <p>.</p>
+        <p>.</p>
+        <p>.</p>
+        <p>.</p>
+        <p>.</p>
+        <p>.</p>
+        <p>.</p>
+        <p>.</p>
+        <p>.</p>
+        <p>.</p>
+        <p>.</p>
+
         <script>
         var width = window.innerWidth;
         var height = 250;
@@ -455,13 +515,6 @@
                 }
                 
             }
-            
-            function display(msg) {
-              var p = document.createElement('p');
-              p.innerHTML = msg;
-              document.body.appendChild(p);
-            }
-
             
         </script>
     </body>
