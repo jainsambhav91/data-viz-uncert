@@ -14,7 +14,10 @@ var data = [
     "no50": 127,
     "allYes": 254,
     "allNo": 254,
-    "allDk": 254
+    "allDk": 254,
+    "yesProp": 201,
+    "noProp": 47,
+    "dkProp": 6
   },
   {
     "district": "BALLIA",

@@ -5,6 +5,7 @@
         <script src="https://d3js.org/d3.v4.min.js"></script>
         <script src="https://d3js.org/d3-drag.v1.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <!--<link href="https://fonts.googleapis.com/css?family=Chivo:300,400" rel="stylesheet">-->
         <script type="text/javascript" src="data.js"></script>
         <style>
         
@@ -12,6 +13,7 @@
                 
         body{
             margin: 20px 20px 20px 20px;
+            /*font-family: 'Chivo', sans-serif;*/
         }
         
         .img {
@@ -160,7 +162,18 @@
                 }
             #figure{
                 float: right;
-            }    
+            } 
+            
+        button:focus {outline:0;}
+        
+        .v1buttons {
+            font-size: 12px;
+            background-color: white;
+            border: 1px solid;
+            border-radius: 2px;
+            border-color: #212121;
+            margin: 5px;
+        }    
        
         </style>
     </head>
@@ -213,18 +226,40 @@
                 
                 <li><img id="key4" src="didntanswer.png" alt="didntanswer"></li>
                 <li id="key3text" style="margin-left: 5px;">  didn't answer</li>
-            </ul>
-            <svg id="visual1"></svg>
-            <div id = "checkboxes">
-                <h5 style="padding:0px 0px 0px 10px;">Click on the checkboxes to see how the trends would have changed if the non-respondents had responded in the following manner :</h5>
+            </ul><br> <br><br> 
+         
             
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <svg id="visual1"></svg>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <!--<br>-->
+                        <!--<br>-->
+                        
+                        <div id = "checkboxes">
+                <h5 style="padding:0px 0px 0px 10px;"><span font-color="#062b68"><b>Click</b></span> on the buttons below to see how the trends would have changed if the <br>non-respondents had responded in the following manner :</h5>
+     
                 <ul id="ul2">
-                  <li class="cblist"><input id='cv1' type='checkbox' onclick='click1(this);'>    When <b>50%</b> responded <i>'yes'</i>, <b>50%</b> responed <i>'no'</i></label></li>
-                  <li class="cblist"><input id='cv2' type='checkbox' onclick='click2(this);'>    When <b>Everyone</b> responded <i>'yes'</i></label></li>
-                  <li class="cblist"><input id='cv3' type='checkbox' onclick='click3(this);'>    When <b>Everyone</b> responded <i>'no'</i></label></li>
-                  <li class="cblist"><input id='cv4' type='checkbox' onclick='click4(this);'>    When <b>Everyone</b> responded <i>'don't know'</i></label></li>
+                  <button id="v1b1" class="v1buttons" onclick="click1()">If <b>50%</b> responded <i>'yes'</i>, <b>50%</b> responded <i>'no'</i></button><br>  
+                  <button id="v1b2" class="v1buttons" onclick="click2()">If <b>Everyone</b> responded <i>'yes'</i></button><br>  
+                  <button id="v1b3" class="v1buttons" onclick="click3()">If <b>Everyone</b> responded <i>'no'</i></button> <br>  
+                  <button id="v1b4" class="v1buttons" onclick="click4()">If <b>Everyone</b> responded <i>'don't know'</i></button> <br>  
+                  <button id="v1b5" class="v1buttons" onclick="click5()">If non-respondents responded in the <b>same proportion</b> as respondents</button>  
+                    
+                    
+                  <!--<li class="cblist"><input id='cv1' type='button' onclick='click1(this);'>    If <b>50%</b> responded <i>'yes'</i>, <b>50%</b> responded <i>'no'</i></label></li>-->
+                  <!--<li class="cblist"><input id='cv2' type='button' onclick='click2(this);'>    If <b>Everyone</b> responded <i>'yes'</i></label></li>-->
+                  <!--<li class="cblist"><input id='cv3' type='button' onclick='click3(this);'>    If <b>Everyone</b> responded <i>'no'</i></label></li>-->
+                  <!--<li class="cblist"><input id='cv4' type='button' onclick='click4(this);'>    If <b>Everyone</b> responded <i>'don't know'</i></label></li>-->
                 </ul>
             </div>
+                    </div>
+                </div>
+                
+            </div>
+        
         </div>
          <br>
             <br>
@@ -253,10 +288,10 @@
                 <h5 style="padding:0px 0px 0px 10px;">Click on the checkboxes to see how the trends would have changed if the non-respondents had responded in the following manner </h5>
             
                 <ul id="ul2">
-                  <li class="cblist"><input id='cv12' type='checkbox' onclick='click12(this);'>    When <b>50%</b> responded <i>'yes'</i>, <b>50%</b> responed <i>'no'</i></label></li>
-                  <li class="cblist"><input id='cv22' type='checkbox' onclick='click22(this);'>    When <b>Everyone</b> responded <i>'yes'</i></label></li>
-                  <li class="cblist"><input id='cv32' type='checkbox' onclick='click32(this);'>    When <b>Everyone</b> responded <i>'no'</i></label></li>
-                  <li class="cblist"><input id='cv42' type='checkbox' onclick='click42(this);'>    When <b>Everyone</b> responded <i>'don't know'</i></label></li>
+                  <li class="cblist"><input id='cv12' type='checkbox' onclick='click12(this);'>    If <b>50%</b> responded <i>'yes'</i>, <b>50%</b> responed <i>'no'</i></label></li>
+                  <li class="cblist"><input id='cv22' type='checkbox' onclick='click22(this);'>    If <b>Everyone</b> responded <i>'yes'</i></label></li>
+                  <li class="cblist"><input id='cv32' type='checkbox' onclick='click32(this);'>    If <b>Everyone</b> responded <i>'no'</i></label></li>
+                  <li class="cblist"><input id='cv42' type='checkbox' onclick='click42(this);'>    If <b>Everyone</b> responded <i>'don't know'</i></label></li>
                 </ul>
             </div>
             <br>
@@ -287,10 +322,10 @@
                 <h5 style="padding:0px 0px 0px 10px;">Click on the checkboxes to see how the trends would have changed if the non-respondents had responded in the following manner :</h5>
             
                 <ul id="ul2">
-                  <li class="cblist"><input id='cv13' type='checkbox' onclick='click13(this);'>    When <b>50%</b> responded <i>'yes'</i>, <b>50%</b> responed <i>'no'</i></label></li>
-                  <li class="cblist"><input id='cv23' type='checkbox' onclick='click23(this);'>    When <b>Everyone</b> responded <i>'yes'</i></label></li>
-                  <li class="cblist"><input id='cv33' type='checkbox' onclick='click33(this);'>    When <b>Everyone</b> responded <i>'no'</i></label></li>
-                  <li class="cblist"><input id='cv43' type='checkbox' onclick='click43(this);'>    When <b>Everyone</b> responded <i>'don't know'</i></label></li>
+                  <li class="cblist"><input id='cv13' type='checkbox' onclick='click13(this);'>    If <b>50%</b> responded <i>'yes'</i>, <b>50%</b> responed <i>'no'</i></label></li>
+                  <li class="cblist"><input id='cv23' type='checkbox' onclick='click23(this);'>    If <b>Everyone</b> responded <i>'yes'</i></label></li>
+                  <li class="cblist"><input id='cv33' type='checkbox' onclick='click33(this);'>    If <b>Everyone</b> responded <i>'no'</i></label></li>
+                  <li class="cblist"><input id='cv43' type='checkbox' onclick='click43(this);'>    If <b>Everyone</b> responded <i>'don't know'</i></label></li>
                 </ul>
             </div>
         
@@ -371,11 +406,28 @@
                  
             }
             
-            function click1(cv1){
-                if(cv1.checked){
-                    document.getElementById("cv2").checked = false;
-                    document.getElementById("cv3").checked = false;
-                    document.getElementById("cv4").checked = false;
+            function click1(){
+                
+                document.getElementById("v1b1").style.backgroundColor = "#212121";
+                document.getElementById("v1b1").style.color = "white";
+                
+                document.getElementById("v1b2").style.color = "gray";
+                document.getElementById("v1b3").style.color = "gray";
+                document.getElementById("v1b4").style.color = "gray";
+                document.getElementById("v1b5").style.color = "gray";
+                
+                document.getElementById("v1b2").style.backgroundColor = "white";
+                document.getElementById("v1b3").style.backgroundColor = "white";
+                document.getElementById("v1b4").style.backgroundColor = "white";
+                document.getElementById("v1b5").style.backgroundColor = "white";
+                
+                
+                
+                
+                
+                    // document.getElementById("cv2").checked = false;
+                    // document.getElementById("cv3").checked = false;
+                    // document.getElementById("cv4").checked = false;
                     // display("check");
                 var x = -5;
                 var y = 0;
@@ -497,17 +549,30 @@
                 });     
             
                     
-                }else{
+                
                     // display("not checked");
-                    baseVisualPost(150);
-                }
+                    // baseVisualPost(150);
+                
             }
             
-            function click2(cv2){
-                if(cv2.checked){
-                    document.getElementById("cv1").checked = false;
-                    document.getElementById("cv3").checked = false;
-                    document.getElementById("cv4").checked = false;
+            function click2(){
+                
+                document.getElementById("v1b2").style.backgroundColor = "#212121";
+                document.getElementById("v1b2").style.color = "white";
+                
+                document.getElementById("v1b1").style.color = "gray";
+                document.getElementById("v1b3").style.color = "gray";
+                document.getElementById("v1b4").style.color = "gray";
+                document.getElementById("v1b5").style.color = "gray";
+                
+                document.getElementById("v1b1").style.backgroundColor = "white";
+                document.getElementById("v1b3").style.backgroundColor = "white";
+                document.getElementById("v1b4").style.backgroundColor = "white";
+                document.getElementById("v1b5").style.backgroundColor = "white";
+                
+                    // document.getElementById("cv1").checked = false;
+                    // document.getElementById("cv3").checked = false;
+                    // document.getElementById("cv4").checked = false;
                     // display("check");
                 var x = -5;
                 var y = 0;
@@ -615,17 +680,30 @@
                 });     
                              
                     
-                }else{
+                
                     // display("not checked");
-                    baseVisualPost(150);
-                }
+                    // baseVisualPost(150);
+                
             }
             
-            function click3(cv3){
-                if(cv3.checked){
-                    document.getElementById("cv1").checked = false;
-                    document.getElementById("cv2").checked = false;
-                    document.getElementById("cv4").checked = false;
+            function click3(){
+                
+                document.getElementById("v1b3").style.backgroundColor = "#212121";
+                document.getElementById("v1b3").style.color = "white";
+                
+                document.getElementById("v1b1").style.color = "gray";
+                document.getElementById("v1b2").style.color = "gray";
+                document.getElementById("v1b4").style.color = "gray";
+                document.getElementById("v1b5").style.color = "gray";
+                
+                document.getElementById("v1b1").style.backgroundColor = "white";
+                document.getElementById("v1b2").style.backgroundColor = "white";
+                document.getElementById("v1b4").style.backgroundColor = "white";
+                document.getElementById("v1b5").style.backgroundColor = "white";
+                
+                    // document.getElementById("cv1").checked = false;
+                    // document.getElementById("cv2").checked = false;
+                    // document.getElementById("cv4").checked = false;
                     // display("check");
                 var x = -5;
                 var y = 0;
@@ -731,17 +809,30 @@
                              
                 
                     
-                }else{
+                
                     // display("not checked");
-                    baseVisualPost(150);
-                }
+                    // baseVisualPost(150);
+                
             }
             
-            function click4(cv4){
-                if(cv4.checked){
-                    document.getElementById("cv1").checked = false;
-                    document.getElementById("cv2").checked = false;
-                    document.getElementById("cv3").checked = false;
+            function click4(){
+                
+                document.getElementById("v1b4").style.backgroundColor = "#212121";
+                document.getElementById("v1b4").style.color = "white";
+                
+                document.getElementById("v1b1").style.color = "gray";
+                document.getElementById("v1b2").style.color = "gray";
+                document.getElementById("v1b3").style.color = "gray";
+                document.getElementById("v1b5").style.color = "gray";
+                
+                document.getElementById("v1b1").style.backgroundColor = "white";
+                document.getElementById("v1b2").style.backgroundColor = "white";
+                document.getElementById("v1b3").style.backgroundColor = "white";
+                document.getElementById("v1b5").style.backgroundColor = "white";
+                
+                    // document.getElementById("cv1").checked = false;
+                    // document.getElementById("cv2").checked = false;
+                    // document.getElementById("cv3").checked = false;
                     // display("check");
                 var x = -5;
                 var y = 0;
@@ -844,10 +935,138 @@
                 });     
                      
                 
-          }else{
+          
                     // display("not checked");
-                    baseVisualPost(150);
+                    // baseVisualPost(150);
+                
+            }
+            
+            function click5(){
+                
+                document.getElementById("v1b5").style.backgroundColor = "#212121";
+                document.getElementById("v1b5").style.color = "white";
+                
+                document.getElementById("v1b1").style.color = "gray";
+                document.getElementById("v1b2").style.color = "gray";
+                document.getElementById("v1b3").style.color = "gray";
+                document.getElementById("v1b4").style.color = "gray";
+                
+                document.getElementById("v1b1").style.backgroundColor = "white";
+                document.getElementById("v1b2").style.backgroundColor = "white";
+                document.getElementById("v1b3").style.backgroundColor = "white";
+                document.getElementById("v1b4").style.backgroundColor = "white";
+                
+                    // document.getElementById("cv1").checked = false;
+                    // document.getElementById("cv2").checked = false;
+                    // document.getElementById("cv3").checked = false;
+                    // display("check");
+                var x = -5;
+                var y = 0;
+                
+                for(var i=1; i<=data[0]['preTot']; i++){
+                
+                var color = "";
+                var clas = "";
+                if(i < data[0]['postYes']){ color = "#ffa124"; clas = "postYes1"; }else if(i< data[0]['postYes'] + data[0]['yesProp']){ color = "#ffcc88"; clas = "postYesProp";}else if(i< data[0]['postYes'] + data[0]['yesProp'] + data[0]['postNo']){ color = "#35b9ed" ; clas = "postNo1";}else if(i< data[0]['postYes'] + data[0]['yesProp'] + data[0]['postNo'] + data[0]['noProp']){color = "#c1e0ea"; clas = "postNoProp";}else if(i <= data[0]['postYes'] + data[0]['yesProp'] + data[0]['postNo'] + data[0]['noProp'] + data[0]['postDk']){color = "#ffb8f2"; clas = "postDk1";}else if(i <= data[0]['postYes'] + data[0]['yesProp'] + data[0]['postNo'] + data[0]['noProp'] + data[0]['postDk'] + data[0]['dkProp']){color = "#ffebfc"; clas = "postDkProp";};
+
+                // if(i < data[0]['postYes']){ color = "#ffa124";  clas = 'postYes1'; }else if(i< data[0]['postYes'] + data[0]['postNo']){ color = "#35b9ed";  clas = 'postNo1'; }else if(i< data[0]['postYes'] + data[0]['postNo'] + data[0]['postDk']){ color = "#ffb8f2"; clas = 'postDk1';}else if(i<= data[0]['postYes'] + data[0]['postNo'] + data[0]['postDk'] + data[0]['allDk']){color = "#ffebfc"; clas = 'allDk1';};
+                    if(y%50 == 0){
+                        x+=5;
+                        y=0;
+                        d3.select('#visual1')
+                            .append('rect')
+                            .attr("class", clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                        y+=5;    
+                    }else{    
+                   d3.select('#visual1')
+                            .append('rect')
+                            .attr("class", clas)
+                            .attr('x', x + 20)
+                            .attr('y', y + 150)
+                            .attr('width', 5)
+                            .attr('height', 5)
+                            .attr('fill', color)
+                            .attr('stroke', 'white')
+                            .attr('stroke-width', 1);
+                    y+=5;
+                    }
                 }
+                
+            d3.selectAll(".postYes1")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[0]['postYes'] + "</b>" + " responded 'yes' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+           
+           
+            d3.selectAll(".postNo1")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[0]['postNo'] + "</b>" + " responded 'no' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });
+            
+            d3.selectAll(".postDk1")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[0]['postDk'] + "</b>" + " responded 'don't know' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                }); 
+            
+            
+            
+            d3.selectAll(".allDk1")
+            .on("mouseover", function(){
+                div.transition()		
+                .style("opacity", 1);
+                div.html("<span style='font-size: 10px; color: white; text-anchor: middle; text-align: center; '>" + " " + "<b>" + data[0]['allDk'] + "</b>" + " may have responded 'don't know' " + "</span>")	
+                                        .style("left", (d3.event.pageX) - 100 + "px")		
+                                        .style("top", (d3.event.pageY) - 30 + "px");
+                
+            })
+            .on("mouseout", function() {
+                div.transition()		
+                .duration(0)		
+                .style("opacity", 0);	
+                });     
+                     
+                
+          
+                    // display("not checked");
+                    // baseVisualPost(150);
+                
             }
             
             function baseVisualPost(dist){
